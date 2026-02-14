@@ -1,115 +1,36 @@
-# Prueba Técnica 2 — Desarrollo Web con Vue.js (EMTELCO)
+# Prueba Técnica 2 — EMTELCO (Vue 3 + Vite)
 
-Aplicación en Vue 3 + Vite que:
-- Carga usuarios desde un JSON local usando `fetch`
-- Guarda los datos en estado reactivo
-- Muestra usuarios en tabla (`v-for`)
-- Filtra por rol (select) y búsqueda simple
-- Permite eliminar usuarios solo de la vista (no modifica el JSON real)
-- Muestra mensaje cuando no haya usuarios visibles (`v-if / v-else`)
-- Incluye un componente separado: `UserList.vue`
+Aplicación SPA que gestiona usuarios de un JSON local y una lista de tareas con contexto por rol y asignación individual.
 
-## Requisitos
-- Node.js 18+ recomendado
+## Stack
+- Vue 3 + Vite
+- CSS plano (tema inspirado en la paleta índigo/cian de EMTELCO)
 
-## Instalación
+## Características principales
+- **Usuarios**: carga con `fetch` desde `src/data/users.json`, filtros por rol y búsqueda, eliminación solo visual, restauración de usuarios eliminados.
+- **Tareas**: lista tipo to‑do con crear, marcar como hecha, reasignar a un usuario o dejar “cualquiera (rol)”, eliminar tarea.
+- **Contexto rol/usuario**: las tareas se muestran tanto por rol como por usuario asignado.
+- **Feedback**: avisos de confirmación en la sección de tareas y globales.
+- **Seed de datos**:
+  - Usuarios de ejemplo en `src/data/users.json`.
+  - Tareas iniciales en `src/App.vue` (array `tasks`).
+
+## Scripts
 ```bash
-npm install
+npm install      # instalar dependencias
+npm run dev      # modo desarrollo (http://localhost:5173)
+npm run build    # build de producción
+npm run preview  # vista previa del build
 ```
 
-## Ejecutar en desarrollo
-```bash
-npm run dev
-```
+## Estructura relevante
+- `src/App.vue` — estado principal, tareas seed, lógica de usuarios ocultos/restauración y notificaciones.
+- `src/components/UserList.vue` — tabla de usuarios con filtros y tareas asociadas.
+- `src/components/TodoList.vue` — alta/edición/asignación/eliminación de tareas y confirmaciones inline.
+- `src/data/users.json` — base de usuarios de ejemplo.
+- `src/styles.css` — tema y layout inspirados en EMTELCO.
 
-Abre la URL que te muestre la consola (normalmente http://localhost:5173).
-
-## Construir para producción
-```bash
-npm run build
-```
-
-## Vista previa del build
-```bash
-npm run preview
-```
-
-⚙️ Funcionalidades implementadas
-1. Carga de datos
-
-Consumo del archivo users.json mediante fetch
-
-Almacenamiento de los datos en estado reactivo (ref)
-
-Manejo básico de estado de carga
-
-2. Visualización
-
-Listado de usuarios en tabla
-
-Uso de v-for con key
-
-Visualización de:
-
-Nombre
-
-Email
-
-Rol
-
-3. Filtro simple
-
-Filtro por rol (admin / user) mediante select
-
-Implementado con propiedades computadas (computed)
-
-4. Interacción básica
-
-Botón para eliminar usuarios solo de la vista
-
-No se modifica el archivo JSON original
-
-Mensaje informativo cuando no hay usuarios visibles (v-if / v-else)
-
-🧠 Manejo del estado
-
-El estado principal se mantiene en App.vue
-
-El componente UserList.vue recibe datos por props
-
-La eliminación de usuarios se comunica mediante eventos (emit)
-
-No se utilizan variables globales
-
-▶️ Instalación y ejecución
-Requisitos
-
-Node.js 18 o superior
-
-Pasos
-npm install
-npm run dev
-
-
-Luego abrir en el navegador:
-
-http://localhost:5173
-
-📌 Consideraciones técnicas
-
-La eliminación de usuarios es visual, tal como se solicita en la prueba
-
-El proyecto no depende de backend ni base de datos
-
-Se priorizó claridad, legibilidad y buenas prácticas sobre complejidad innecesaria
-
-👤 Autor
-
-Deivy Sebastián Sánchez Echeverri
-Tecnólogo en Análisis y Desarrollo de Software
-Practicante – EMTELCO
-
-✅ Estado del proyecto
-
-✔️ Prueba técnica completada
-✔️ Requisitos funcionales y técnicos cumplidos
+## Notas de uso
+- Eliminar usuarios solo afecta la vista; se pueden restaurar sin recargar.
+- Para que una tarea quede para una persona específica, asigna `assignedUserId` al `id` del usuario y usa el `role` correspondiente.
+- Si agregas más usuarios o roles en `users.json`, se reflejan automáticamente en filtros y asignaciones.
