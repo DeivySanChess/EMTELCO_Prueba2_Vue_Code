@@ -58,7 +58,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="task in tasks" :key="task.id">
+        <tr v-for="task in orderedTasks" :key="task.id">
           <td>
             <input type="checkbox" :checked="task.done" @change="toggle(task.id)" />
           </td>
@@ -121,11 +121,19 @@ watch(
 )
 
 const usersByRole = (role) => {
-  if (!role) return props.users
-  return props.users.filter(u => u.role === role)
+  const list = role ? props.users.filter(u => u.role === role) : props.users
+  return [...list].sort((a, b) => a.name.localeCompare(b.name))
 }
 
 const pendingCount = computed(() => props.tasks.filter(t => !t.done).length)
+
+const orderedTasks = computed(() => {
+  return [...props.tasks].sort((a, b) => {
+    const roleCmp = a.role.localeCompare(b.role)
+    if (roleCmp !== 0) return roleCmp
+    return a.title.localeCompare(b.title)
+  })
+})
 
 const submit = () => {
   if (!newTitle.value.trim() || !newRole.value) return

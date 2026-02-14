@@ -11,6 +11,8 @@
         <img class="brand-logo" :src="logo" alt="Logo Emtelco" />
       </div>
 
+      <div v-if="flash" :class="['flash', flashType]">{{ flash }}</div>
+
       <div v-if="loading" class="loading">
         <span class="dot"></span>
         <span>Cargando usuarios...</span>
@@ -69,6 +71,10 @@ const hiddenUsers = ref([])
 const showHidden = ref(false)
 const loading = ref(true)
 
+const flash = ref('')
+const flashType = ref('flash-success')
+let flashTimer = null
+
 const tasks = ref([
   { id: 1, title: 'Revisar logs de errores del dashboard', role: 'admin', assignedUserId: null, done: false },
   { id: 2, title: 'Actualizar datos de contacto de clientes VIP', role: 'user', assignedUserId: null, done: false },
@@ -89,7 +95,7 @@ const roleOptions = computed(() => {
     ...users.value.map(u => u.role),
     ...tasks.value.map(t => t.role)
   ])
-  return Array.from(set)
+  return Array.from(set).sort((a, b) => a.localeCompare(b))
 })
 
 onMounted(async () => {
@@ -105,11 +111,19 @@ onMounted(async () => {
   }
 })
 
+const notify = (msg, type = 'flash-success') => {
+  flash.value = msg
+  flashType.value = type
+  if (flashTimer) clearTimeout(flashTimer)
+  flashTimer = setTimeout(() => (flash.value = ''), 2500)
+}
+
 const handleRemove = (id) => {
   const user = users.value.find(u => u.id === id)
   if (user) hiddenUsers.value = [...hiddenUsers.value.filter(u => u.id !== id), user]
   users.value = users.value.filter(u => u.id !== id)
   tasks.value = tasks.value.map(t => t.assignedUserId === id ? { ...t, assignedUserId: null } : t)
+  notify('Usuario eliminado de la vista. Puedes restaurarlo abajo.', 'flash-info')
 }
 
 const restoreUser = (id) => {
@@ -117,12 +131,14 @@ const restoreUser = (id) => {
   if (!user) return
   users.value = [...users.value, user]
   hiddenUsers.value = hiddenUsers.value.filter(u => u.id !== id)
+  notify('Usuario restaurado correctamente.', 'flash-success')
 }
 
 const toggleTask = (id) => {
   tasks.value = tasks.value.map(t =>
     t.id === id ? { ...t, done: !t.done } : t
   )
+  notify('Estado de la tarea actualizado.', 'flash-success')
 }
 
 const addTask = ({ title, role, userId }) => {
@@ -134,15 +150,18 @@ const addTask = ({ title, role, userId }) => {
     ...tasks.value,
     { id: nextId, title: cleanTitle, role: cleanRole, assignedUserId: userId, done: false }
   ]
+  notify('Tarea creada y asignada.', 'flash-success')
 }
 
 const updateTaskAssignee = ({ id, userId }) => {
   tasks.value = tasks.value.map(t =>
     t.id === id ? { ...t, assignedUserId: userId } : t
   )
+  notify('Asignación de tarea actualizada.', 'flash-success')
 }
 
 const removeTask = (id) => {
   tasks.value = tasks.value.filter(t => t.id !== id)
+  notify('Tarea eliminada.', 'flash-info')
 }
 </script>

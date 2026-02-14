@@ -83,17 +83,23 @@ const search = ref('')
 
 const roles = computed(() => {
   const set = new Set(props.users.map(u => u.role))
-  return Array.from(set)
+  return Array.from(set).sort((a, b) => a.localeCompare(b))
 })
 
 const filteredUsers = computed(() => {
   const role = selectedRole.value.trim()
   const q = search.value.trim().toLowerCase()
 
-  return props.users.filter(u => {
+  const list = props.users.filter(u => {
     const byRole = !role || u.role === role
     const byQuery = !q || (u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q))
     return byRole && byQuery
+  })
+
+  return list.sort((a, b) => {
+    const roleCmp = a.role.localeCompare(b.role)
+    if (roleCmp !== 0) return roleCmp
+    return a.name.localeCompare(b.name)
   })
 })
 
