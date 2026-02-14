@@ -131,3 +131,22 @@ tr:last-child td{ border-bottom: none; }
   0%,100%{ opacity:.2; transform: scale(.9); }
   50%{ opacity:1; transform: scale(1.1); }
 }
+.todo-card{ margin-top:16px; }
+.todo-header{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap:12px;
+  margin-bottom: 8px;
+}
+.todo-table th:nth-child(1),
+.todo-table td:nth-child(1){
+  text-align: center;
+}
+.task-title.done{
+  text-decoration: line-through;
+  color:#9ca3af;
+}
+.task-note{
+  font-size:12px;
+}

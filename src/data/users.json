@@ -1,7 +1,12 @@
-[
+﻿[
   { "id": 1, "name": "Juan Pérez", "email": "juan.perez@mail.com", "role": "admin" },
   { "id": 2, "name": "Ana Gómez", "email": "ana.gomez@mail.com", "role": "user" },
   { "id": 3, "name": "Carlos Ruiz", "email": "carlos.ruiz@mail.com", "role": "user" },
   { "id": 4, "name": "María Torres", "email": "maria.torres@mail.com", "role": "admin" },
-  { "id": 5, "name": "Sofía López", "email": "sofia.lopez@mail.com", "role": "user" }
+  { "id": 5, "name": "Sofía López", "email": "sofia.lopez@mail.com", "role": "user" },
+  { "id": 6, "name": "Lucía Hernández", "email": "lucia.hernandez@mail.com", "role": "manager" },
+  { "id": 7, "name": "Miguel Ángel Ríos", "email": "miguel.rios@mail.com", "role": "analyst" },
+  { "id": 8, "name": "Paula Fernández", "email": "paula.fernandez@mail.com", "role": "qa" },
+  { "id": 9, "name": "Andrés Martínez", "email": "andres.martinez@mail.com", "role": "supervisor" },
+  { "id": 10, "name": "Valentina Castro", "email": "valentina.castro@mail.com", "role": "trainer" }
 ]
