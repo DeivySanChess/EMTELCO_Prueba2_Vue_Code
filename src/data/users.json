@@ -9,5 +9,6 @@
   { "id": 8, "name": "Paula Fernández", "email": "paula.fernandez@gmail.com", "role": "qa" },
   { "id": 9, "name": "Andrés Martínez", "email": "andres.martinez@gmail.com", "role": "supervisor" },
   { "id": 10, "name": "Valentina Castro", "email": "valentina.castro@gmail.com", "role": "trainer" },
-  { "id": 11, "name": "Deivy Sanchez", "email": "sebastian04-17@hotmail.com", "role": "aprendiz" }
+  { "id": 11, "name": "Deivy Sanchez", "email": "sebastian04-17@hotmail.com", "role": "aprendiz" },
+  { "id": 12, "name": "Andrea Orrego", "email": "aorrech@emtelco.com.co", "role": "Psicologa" }
 ]
