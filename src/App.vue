@@ -1,10 +1,15 @@
-<template>
+﻿<template>
   <div class="container">
     <div class="card">
-      <h1>Prueba Técnica 2 — Vue.js</h1>
-      <p class="muted">
-        Carga usuarios desde un JSON local, muestra la lista, filtra por rol y permite eliminar usuarios solo de la vista.
-      </p>
+      <div class="header">
+        <div class="title">
+          <h1>Prueba Técnica 2 — Vue.js</h1>
+          <p class="muted">
+            Carga usuarios desde un JSON local, muestra la lista, filtra por rol y permite eliminar usuarios solo de la vista.
+          </p>
+        </div>
+        <img class="brand-logo" :src="logo" alt="Logo Emtelco" />
+      </div>
 
       <div v-if="loading" class="loading">
         <span class="dot"></span>
@@ -29,6 +34,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import UserList from './components/UserList.vue'
+import logo from './assets/emtelco-logo.png'
 
 const users = ref([])
 const loading = ref(true)
