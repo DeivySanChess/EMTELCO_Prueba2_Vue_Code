@@ -1,0 +1,111 @@
+:root{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height: 1.4;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+*{ box-sizing: border-box; }
+body{ margin:0; }
+.container{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+.card{
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+h1{ margin: 0 0 8px; font-size: 20px; }
+p{ margin: 0 0 12px; color:#4b5563; }
+.row{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 12px 0 16px;
+}
+label{
+  font-size: 14px;
+  color:#374151;
+  display:flex;
+  gap: 8px;
+  align-items:center;
+}
+select, input{
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: white;
+  min-width: 180px;
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+thead{ background: #f9fafb; }
+th, td{
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+tr:last-child td{ border-bottom: none; }
+.badge{
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn{
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn:hover{ background:#f9fafb; }
+.btn-danger{
+  border-color: #fecaca;
+  background: #fff;
+  color: #991b1b;
+}
+.btn-danger:hover{ background:#fef2f2; }
+.muted{ color:#6b7280; font-size: 13px; }
+.footer{
+  margin-top: 10px;
+  display:flex;
+  justify-content: space-between;
+  gap:12px;
+  flex-wrap: wrap;
+  color:#6b7280;
+  font-size: 13px;
+}
+.loading{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#374151;
+  font-size: 14px;
+}
+.dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background:#111827;
+  animation: pulse 1s infinite ease-in-out;
+}
+@keyframes pulse{
+  0%,100%{ opacity:.2; transform: scale(.9); }
+  50%{ opacity:1; transform: scale(1.1); }
+}

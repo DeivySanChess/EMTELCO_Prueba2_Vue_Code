@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Juan Pérez", "email": "juan.perez@mail.com", "role": "admin" },
+  { "id": 2, "name": "Ana Gómez", "email": "ana.gomez@mail.com", "role": "user" },
+  { "id": 3, "name": "Carlos Ruiz", "email": "carlos.ruiz@mail.com", "role": "user" },
+  { "id": 4, "name": "María Torres", "email": "maria.torres@mail.com", "role": "admin" },
+  { "id": 5, "name": "Sofía López", "email": "sofia.lopez@mail.com", "role": "user" }
+]
