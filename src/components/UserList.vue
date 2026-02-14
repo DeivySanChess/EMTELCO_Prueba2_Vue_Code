@@ -31,7 +31,7 @@
           <th>Nombre</th>
           <th>Email</th>
           <th>Rol</th>
-          <th>Tareas (rol)</th>
+          <th>Tareas asignadas</th>
           <th style="width:140px;">Acción</th>
         </tr>
       </thead>
@@ -44,9 +44,9 @@
             <span class="badge">{{ user.role }}</span>
           </td>
           <td>
-            <div v-if="tasksByRole(user.role).length" class="tasks-cell">
+            <div v-if="tasksForUser(user).length" class="tasks-cell">
               <div
-                v-for="task in tasksByRole(user.role)"
+                v-for="task in tasksForUser(user)"
                 :key="task.id"
                 class="task-chip"
                 :class="{ done: task.done }"
@@ -97,7 +97,10 @@ const filteredUsers = computed(() => {
   })
 })
 
-const tasksByRole = (role) => props.tasks.filter(t => t.role === role)
+const tasksForUser = (user) => props.tasks.filter(t => {
+  if (t.assignedUserId) return t.assignedUserId === user.id
+  return t.role === user.role
+})
 
 const removeUser = (id) => emit('remove', id)
 </script>

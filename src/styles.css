@@ -154,6 +154,7 @@ tr:last-child td{ border-bottom: none; }
   border-radius:10px;
   background:#f9fafb;
   font-size: 12px;
+  flex-wrap: wrap;
 }
 .task-chip .status{
   font-weight: 600;

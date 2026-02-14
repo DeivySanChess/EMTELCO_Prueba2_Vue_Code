@@ -34,6 +34,7 @@
       <TodoList
         :tasks="tasks"
         :roles="roleOptions"
+        :users="users"
         @toggle="toggleTask"
         @add="addTask"
       />
@@ -51,16 +52,18 @@ const users = ref([])
 const loading = ref(true)
 
 const tasks = ref([
-  { id: 1, title: 'Revisar logs de errores del dashboard', role: 'admin', done: false },
-  { id: 2, title: 'Actualizar datos de contacto de clientes VIP', role: 'user', done: false },
-  { id: 3, title: 'Preparar reporte semanal de CX para gerencia', role: 'manager', done: true },
-  { id: 4, title: 'Capacitar a nuevo agente en script de ventas', role: 'trainer', done: false },
-  { id: 5, title: 'Optimizar guion de llamadas salientes', role: 'analyst', done: false },
-  { id: 6, title: 'Revisar KPIs de calidad (QA) del sprint', role: 'qa', done: true },
-  { id: 7, title: 'Auditar 5 llamadas aleatorias del día', role: 'supervisor', done: false },
-  { id: 8, title: 'Configurar tablero de indicadores en Power BI', role: 'manager', done: false },
-  { id: 9, title: 'Refinar checklist de QA para onboarding', role: 'aprendiz', done: false },
-  { id: 10, title: 'Documentar dudas surgidas durante la inducción', role: 'aprendiz', done: true }
+  { id: 1, title: 'Revisar logs de errores del dashboard', role: 'admin', assignedUserId: null, done: false },
+  { id: 2, title: 'Actualizar datos de contacto de clientes VIP', role: 'user', assignedUserId: null, done: false },
+  { id: 3, title: 'Preparar reporte semanal de CX para gerencia', role: 'manager', assignedUserId: 6, done: true },
+  { id: 4, title: 'Capacitar a nuevo agente en script de ventas', role: 'trainer', assignedUserId: 10, done: false },
+  { id: 5, title: 'Optimizar guion de llamadas salientes', role: 'analyst', assignedUserId: 7, done: false },
+  { id: 6, title: 'Revisar KPIs de calidad (QA) del sprint', role: 'qa', assignedUserId: 8, done: true },
+  { id: 7, title: 'Auditar 5 llamadas aleatorias del día', role: 'supervisor', assignedUserId: 9, done: false },
+  { id: 8, title: 'Configurar tablero de indicadores en Power BI', role: 'manager', assignedUserId: null, done: false },
+  { id: 9, title: 'Refinar checklist de QA para onboarding', role: 'aprendiz', assignedUserId: 11, done: true },
+  { id: 10, title: 'Documentar dudas surgidas durante la inducción', role: 'aprendiz', assignedUserId: 11, done: true },
+  { id: 11, title: 'Prueba Técnica 1 CRUD Empleados', role: 'aprendiz', assignedUserId: 11, done: true },
+  { id: 12, title: 'Prueba Técnica 2 — Vue.js', role: 'aprendiz', assignedUserId: 11, done: true }
 ])
 
 const roleOptions = computed(() => {
@@ -86,6 +89,7 @@ onMounted(async () => {
 
 const handleRemove = (id) => {
   users.value = users.value.filter(u => u.id !== id)
+  tasks.value = tasks.value.map(t => t.assignedUserId === id ? { ...t, assignedUserId: null } : t)
 }
 
 const toggleTask = (id) => {
@@ -94,14 +98,14 @@ const toggleTask = (id) => {
   )
 }
 
-const addTask = ({ title, role }) => {
+const addTask = ({ title, role, userId }) => {
   const cleanTitle = title.trim()
   const cleanRole = role.trim() || 'user'
   if (!cleanTitle) return
   const nextId = tasks.value.length ? Math.max(...tasks.value.map(t => t.id)) + 1 : 1
   tasks.value = [
     ...tasks.value,
-    { id: nextId, title: cleanTitle, role: cleanRole, done: false }
+    { id: nextId, title: cleanTitle, role: cleanRole, assignedUserId: userId, done: false }
   ]
 }
 </script>
