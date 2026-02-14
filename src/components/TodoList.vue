@@ -10,6 +10,10 @@
       </span>
     </div>
 
+    <div v-if="localFlash" :class="['flash', localFlashType]" style="margin-top:4px;">
+      {{ localFlash }}
+    </div>
+
     <div class="row">
       <label>
         Nueva tarea:
@@ -109,6 +113,9 @@ const newRole = ref('')
 const newUserId = ref('')
 
 const assigneeSelection = reactive({})
+const localFlash = ref('')
+const localFlashType = ref('flash-success')
+let flashTimer = null
 
 watch(
   () => props.tasks,
@@ -119,6 +126,13 @@ watch(
   },
   { immediate: true, deep: true }
 )
+
+const notify = (msg, type = 'flash-success') => {
+  localFlash.value = msg
+  localFlashType.value = type
+  if (flashTimer) clearTimeout(flashTimer)
+  flashTimer = setTimeout(() => (localFlash.value = ''), 2000)
+}
 
 const usersByRole = (role) => {
   const list = role ? props.users.filter(u => u.role === role) : props.users
@@ -142,6 +156,7 @@ const submit = () => {
     role: newRole.value,
     userId: newUserId.value ? Number(newUserId.value) : null
   })
+  notify('Tarea creada.', 'flash-success')
   newTitle.value = ''
   newUserId.value = ''
 }
@@ -151,7 +166,11 @@ const toggle = (id) => emit('toggle', id)
 const saveAssignee = (taskId) => {
   const userId = assigneeSelection[taskId]
   emit('update-assignee', { id: taskId, userId: userId === '' ? null : Number(userId) })
+  notify('Asignación actualizada.', 'flash-success')
 }
 
-const remove = (id) => emit('remove', id)
+const remove = (id) => {
+  emit('remove', id)
+  notify('Tarea eliminada.', 'flash-info')
+}
 </script>
