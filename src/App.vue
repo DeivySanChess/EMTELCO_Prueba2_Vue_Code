@@ -19,6 +19,7 @@
       <div v-else>
         <UserList
           :users="users"
+          :tasks="tasks"
           @remove="handleRemove"
         />
 
@@ -55,7 +56,11 @@ const tasks = ref([
   { id: 3, title: 'Preparar reporte semanal de CX para gerencia', role: 'manager', done: true },
   { id: 4, title: 'Capacitar a nuevo agente en script de ventas', role: 'trainer', done: false },
   { id: 5, title: 'Optimizar guion de llamadas salientes', role: 'analyst', done: false },
-  { id: 6, title: 'Revisar KPIs de calidad (QA) del sprint', role: 'qa', done: true }
+  { id: 6, title: 'Revisar KPIs de calidad (QA) del sprint', role: 'qa', done: true },
+  { id: 7, title: 'Auditar 5 llamadas aleatorias del día', role: 'supervisor', done: false },
+  { id: 8, title: 'Configurar tablero de indicadores en Power BI', role: 'manager', done: false },
+  { id: 9, title: 'Refinar checklist de QA para onboarding', role: 'aprendiz', done: false },
+  { id: 10, title: 'Documentar dudas surgidas durante la inducción', role: 'aprendiz', done: true }
 ])
 
 const roleOptions = computed(() => {
@@ -66,7 +71,6 @@ const roleOptions = computed(() => {
   return Array.from(set)
 })
 
-// Cargar JSON local usando fetch y guardarlo en el estado (reactivo)
 onMounted(async () => {
   try {
     const res = await fetch('/src/data/users.json')
@@ -80,7 +84,6 @@ onMounted(async () => {
   }
 })
 
-// Eliminar solo de la vista (estado en memoria)
 const handleRemove = (id) => {
   users.value = users.value.filter(u => u.id !== id)
 }

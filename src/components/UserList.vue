@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <div class="row">
       <label>
@@ -21,7 +21,6 @@
       </span>
     </div>
 
-    <!-- v-if / v-else: mensaje cuando no haya usuarios visibles -->
     <p v-if="filteredUsers.length === 0" class="muted">
       No hay usuarios visibles.
     </p>
@@ -32,17 +31,31 @@
           <th>Nombre</th>
           <th>Email</th>
           <th>Rol</th>
+          <th>Tareas (rol)</th>
           <th style="width:140px;">Acción</th>
         </tr>
       </thead>
 
       <tbody>
-        <!-- v-for para iterar -->
         <tr v-for="user in filteredUsers" :key="user.id">
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>
             <span class="badge">{{ user.role }}</span>
+          </td>
+          <td>
+            <div v-if="tasksByRole(user.role).length" class="tasks-cell">
+              <div
+                v-for="task in tasksByRole(user.role)"
+                :key="task.id"
+                class="task-chip"
+                :class="{ done: task.done }"
+              >
+                <span>{{ task.title }}</span>
+                <span class="status">{{ task.done ? 'Completada' : 'Pendiente' }}</span>
+              </div>
+            </div>
+            <p v-else class="muted">Sin tareas asignadas</p>
           </td>
           <td>
             <button class="btn btn-danger" @click="removeUser(user.id)">
@@ -58,29 +71,21 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-// Props: lista de usuarios
 const props = defineProps({
-  users: {
-    type: Array,
-    required: true,
-    default: () => []
-  }
+  users: { type: Array, required: true, default: () => [] },
+  tasks: { type: Array, required: true, default: () => [] }
 })
 
-// Evento al padre para eliminar (sin tocar el JSON real)
 const emit = defineEmits(['remove'])
 
-// Estado local (reactivo) para filtros
 const selectedRole = ref('')
 const search = ref('')
 
-// Roles disponibles (derivados de los datos)
 const roles = computed(() => {
   const set = new Set(props.users.map(u => u.role))
   return Array.from(set)
 })
 
-// Lista filtrada (computed => eficiente y claro)
 const filteredUsers = computed(() => {
   const role = selectedRole.value.trim()
   const q = search.value.trim().toLowerCase()
@@ -92,7 +97,7 @@ const filteredUsers = computed(() => {
   })
 })
 
-const removeUser = (id) => {
-  emit('remove', id)
-}
+const tasksByRole = (role) => props.tasks.filter(t => t.role === role)
+
+const removeUser = (id) => emit('remove', id)
 </script>

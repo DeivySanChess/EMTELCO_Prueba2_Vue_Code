@@ -139,6 +139,32 @@ tr:last-child td{ border-bottom: none; }
   gap:12px;
   margin-bottom: 8px;
 }
+.tasks-cell{
+  display:flex;
+  flex-direction: column;
+  gap:6px;
+}
+.task-chip{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap:8px;
+  padding:6px 8px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#f9fafb;
+  font-size: 12px;
+}
+.task-chip .status{
+  font-weight: 600;
+  color:#6b7280;
+}
+.task-chip.done{
+  background:#f0fdf4;
+  border-color:#bbf7d0;
+  color:#15803d;
+}
+.task-chip.done .status{ color:#15803d; }
 .todo-table th:nth-child(1),
 .todo-table td:nth-child(1){
   text-align: center;
