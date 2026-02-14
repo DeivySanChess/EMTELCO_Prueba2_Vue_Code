@@ -80,7 +80,7 @@ const tasks = ref([
   { id: 2, title: 'Actualizar datos de contacto de clientes VIP', role: 'user', assignedUserId: null, done: false },
   { id: 3, title: 'Preparar reporte semanal de CX para gerencia', role: 'manager', assignedUserId: 6, done: true },
   { id: 4, title: 'Capacitar a nuevo agente en script de ventas', role: 'trainer', assignedUserId: 10, done: false },
-  { id: 5, title: 'Optimizar guion de llamadas salientes', role: 'analyst', assignedUserId: 7, done: false },
+  { id: 5, title: 'Optimizar y depurar codigo', role: 'analyst', assignedUserId: 7, done: false },
   { id: 6, title: 'Revisar KPIs de calidad (QA) del sprint', role: 'qa', assignedUserId: 8, done: true },
   { id: 7, title: 'Auditar 5 llamadas aleatorias del día', role: 'supervisor', assignedUserId: 9, done: false },
   { id: 8, title: 'Configurar tablero de indicadores en Power BI', role: 'manager', assignedUserId: null, done: false },
