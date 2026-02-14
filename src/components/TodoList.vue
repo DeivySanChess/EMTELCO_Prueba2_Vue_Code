@@ -3,7 +3,7 @@
     <div class="todo-header">
       <div>
         <h2>Lista de tareas</h2>
-        <p class="muted">Asigna por rol o directamente a una persona.</p>
+        <p class="muted">Asigna por rol o a una persona específica.</p>
       </div>
       <span class="badge">
         Pendientes: <strong>{{ pendingCount }}</strong>
@@ -33,7 +33,7 @@
         <select v-model="newUserId">
           <option value="">Cualquiera con ese rol</option>
           <option
-            v-for="user in usersByRole"
+            v-for="user in usersByRole(newRole)"
             :key="user.id"
             :value="user.id"
           >
@@ -53,7 +53,8 @@
           <th style="width:50px;">Hecho</th>
           <th>Tarea</th>
           <th style="width:140px;">Rol</th>
-          <th style="width:180px;">Asignada a</th>
+          <th style="width:200px;">Asignada a</th>
+          <th style="width:180px;">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -69,7 +70,22 @@
             <span class="badge">{{ task.role }}</span>
           </td>
           <td>
-            <span class="badge">{{ assigneeLabel(task) }}</span>
+            <select v-model="assigneeSelection[task.id]">
+              <option value="">Cualquiera ({{ task.role }})</option>
+              <option
+                v-for="user in usersByRole(task.role)"
+                :key="user.id"
+                :value="user.id"
+              >
+                {{ user.name }} ({{ user.role }})
+              </option>
+            </select>
+          </td>
+          <td>
+            <div class="row" style="gap:6px; margin:0;">
+              <button class="btn" @click="saveAssignee(task.id)">Guardar</button>
+              <button class="btn btn-danger" @click="remove(task.id)">Eliminar</button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -78,7 +94,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watchEffect } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 const props = defineProps({
   tasks: { type: Array, required: true, default: () => [] },
@@ -86,22 +102,28 @@ const props = defineProps({
   users: { type: Array, required: true, default: () => [] }
 })
 
-const emit = defineEmits(['toggle', 'add'])
+const emit = defineEmits(['toggle', 'add', 'update-assignee', 'remove'])
 
 const newTitle = ref('')
 const newRole = ref('')
 const newUserId = ref('')
 
-watchEffect(() => {
-  if (!newRole.value && props.roles.length) {
-    newRole.value = props.roles[0]
-  }
-})
+const assigneeSelection = reactive({})
 
-const usersByRole = computed(() => {
-  if (!newRole.value) return props.users
-  return props.users.filter(u => u.role === newRole.value)
-})
+watch(
+  () => props.tasks,
+  (tasks) => {
+    tasks.forEach(t => {
+      assigneeSelection[t.id] = t.assignedUserId ?? ''
+    })
+  },
+  { immediate: true, deep: true }
+)
+
+const usersByRole = (role) => {
+  if (!role) return props.users
+  return props.users.filter(u => u.role === role)
+}
 
 const pendingCount = computed(() => props.tasks.filter(t => !t.done).length)
 
@@ -118,11 +140,10 @@ const submit = () => {
 
 const toggle = (id) => emit('toggle', id)
 
-const assigneeLabel = (task) => {
-  if (task.assignedUserId) {
-    const person = props.users.find(u => u.id === task.assignedUserId)
-    return person ? `${person.name} (${person.role})` : 'Usuario no encontrado'
-  }
-  return `Cualquiera (${task.role})`
+const saveAssignee = (taskId) => {
+  const userId = assigneeSelection[taskId]
+  emit('update-assignee', { id: taskId, userId: userId === '' ? null : Number(userId) })
 }
+
+const remove = (id) => emit('remove', id)
 </script>

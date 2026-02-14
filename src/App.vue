@@ -24,8 +24,22 @@
         />
 
         <div class="footer">
-          <span>Usuarios en memoria: <strong>{{ users.length }}</strong></span>
+          <span>Usuarios visibles: <strong>{{ users.length }}</strong></span>
           <span class="muted">Nota: eliminar solo afecta la vista (no modifica el JSON real).</span>
+        </div>
+
+        <div class="hidden-users">
+          <button class="btn" @click="showHidden = !showHidden">
+            {{ showHidden ? 'Ocultar usuarios eliminados' : 'Mostrar usuarios eliminados' }} ({{ hiddenUsers.length }})
+          </button>
+
+          <div v-if="showHidden && hiddenUsers.length" class="hidden-list">
+            <div v-for="user in hiddenUsers" :key="user.id" class="hidden-item">
+              <span>{{ user.name }} ({{ user.role }})</span>
+              <button class="btn" @click="restoreUser(user.id)">Restaurar</button>
+            </div>
+          </div>
+          <p v-else-if="showHidden" class="muted">No hay usuarios eliminados.</p>
         </div>
       </div>
     </div>
@@ -37,6 +51,8 @@
         :users="users"
         @toggle="toggleTask"
         @add="addTask"
+        @update-assignee="updateTaskAssignee"
+        @remove="removeTask"
       />
     </div>
   </div>
@@ -49,6 +65,8 @@ import TodoList from './components/TodoList.vue'
 import logo from './assets/emtelco-logo.png'
 
 const users = ref([])
+const hiddenUsers = ref([])
+const showHidden = ref(false)
 const loading = ref(true)
 
 const tasks = ref([
@@ -88,8 +106,17 @@ onMounted(async () => {
 })
 
 const handleRemove = (id) => {
+  const user = users.value.find(u => u.id === id)
+  if (user) hiddenUsers.value = [...hiddenUsers.value.filter(u => u.id !== id), user]
   users.value = users.value.filter(u => u.id !== id)
   tasks.value = tasks.value.map(t => t.assignedUserId === id ? { ...t, assignedUserId: null } : t)
+}
+
+const restoreUser = (id) => {
+  const user = hiddenUsers.value.find(u => u.id === id)
+  if (!user) return
+  users.value = [...users.value, user]
+  hiddenUsers.value = hiddenUsers.value.filter(u => u.id !== id)
 }
 
 const toggleTask = (id) => {
@@ -107,5 +134,15 @@ const addTask = ({ title, role, userId }) => {
     ...tasks.value,
     { id: nextId, title: cleanTitle, role: cleanRole, assignedUserId: userId, done: false }
   ]
+}
+
+const updateTaskAssignee = ({ id, userId }) => {
+  tasks.value = tasks.value.map(t =>
+    t.id === id ? { ...t, assignedUserId: userId } : t
+  )
+}
+
+const removeTask = (id) => {
+  tasks.value = tasks.value.filter(t => t.id !== id)
 }
 </script>
