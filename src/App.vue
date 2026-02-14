@@ -88,7 +88,7 @@ const tasks = ref([
   { id: 10, title: 'Documentar dudas surgidas durante la inducción', role: 'aprendiz', assignedUserId: 11, done: true },
   { id: 11, title: 'Prueba Técnica 1 CRUD Empleados', role: 'aprendiz', assignedUserId: 11, done: true },
   { id: 12, title: 'Prueba Técnica 2 — Vue.js', role: 'aprendiz', assignedUserId: 11, done: true },
-  { id: 13, title: 'Citación aprendices nuevos', role: 'Psicologa', assignedUserId: 11, done: true }
+  { id: 13, title: 'Citación aprendices nuevos', role: 'Psicologa', assignedUserId: 12, done: true }
 ])
 
 const roleOptions = computed(() => {
