@@ -132,19 +132,20 @@ tr:last-child td{ border-bottom: none; }
   padding: 10px 12px;
   border: 1px solid var(--emt-accent-strong);
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--emt-accent), var(--emt-accent-strong));
+  background: linear-gradient(135deg, #dff5ff, #c7ecff);
   cursor: pointer;
   font-size: 13px;
-  color: #0f3045;
+  color: var(--primary-strong);
   font-weight: 600;
   letter-spacing: 0.1px;
   transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
-  box-shadow: 0 10px 22px rgba(33,187,239,0.25);
+  box-shadow: 0 10px 22px rgba(33,187,239,0.18);
 }
 .btn:hover{
   transform: translateY(-1px);
-  box-shadow: 0 12px 26px rgba(33,187,239,0.32);
-  filter: brightness(1.05);
+  background: linear-gradient(135deg, #d0edff, #b5e3ff);
+  box-shadow: 0 12px 26px rgba(33,187,239,0.24);
+  filter: brightness(1.03);
 }
 .btn-danger{
   border-color: var(--primary-strong);
