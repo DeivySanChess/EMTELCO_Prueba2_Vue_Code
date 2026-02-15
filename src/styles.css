@@ -100,6 +100,10 @@ table{
   border-radius: 12px;
   border: 1px solid rgba(48,40,124,0.12);
 }
+table th:not(:last-child),
+table td:not(:last-child){
+  border-right: 1px solid var(--border);
+}
 thead{
   background: linear-gradient(135deg, rgba(48,40,124,0.94), rgba(33,187,239,0.92));
   color: #f4f7ff;
@@ -117,6 +121,9 @@ tbody tr:nth-child(even){
   background: #f1f6ff;
 }
 tr:last-child td{ border-bottom: none; }
+.email-cell{
+  white-space: nowrap;
+}
 .badge{
   padding: 3px 10px;
   border-radius: 999px;
