@@ -84,7 +84,7 @@ const tasks = ref([
   { id: 6, title: 'Revisar KPIs de calidad (QA) del sprint', role: 'qa', assignedUserId: 8, done: true },
   { id: 7, title: 'Auditar 5 llamadas aleatorias del día', role: 'supervisor', assignedUserId: 9, done: false },
   { id: 8, title: 'Configurar tablero de indicadores en Power BI', role: 'manager', assignedUserId: null, done: false },
-  { id: 9, title: 'Refinar checklist de QA para onboarding', role: 'aprendiz', assignedUserId: 11, done: true },
+  { id: 9, title: 'Refinar checklist de QA para onboarding', role: 'aprendiz', assignedUserId: 11, done: false },
   { id: 10, title: 'Documentar dudas surgidas durante la inducción', role: 'aprendiz', assignedUserId: 11, done: true },
   { id: 11, title: 'Prueba Técnica 1 CRUD Empleados', role: 'aprendiz', assignedUserId: 11, done: true },
   { id: 12, title: 'Prueba Técnica 2 — Vue.js', role: 'aprendiz', assignedUserId: 11, done: true },
