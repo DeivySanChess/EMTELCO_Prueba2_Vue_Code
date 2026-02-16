@@ -91,6 +91,7 @@ const tasks = ref([
   { id: 13, title: 'Citación aprendices nuevos', role: 'Psicologa', assignedUserId: 12, done: true }
 ])
 
+// Combina roles de usuarios y tareas para mantener el selector siempre actualizado.
 const roleOptions = computed(() => {
   const set = new Set([
     ...users.value.map(u => u.role),
@@ -100,6 +101,7 @@ const roleOptions = computed(() => {
 })
 
 onMounted(async () => {
+  // Carga el JSON local una sola vez al montar la app.
   try {
     const res = await fetch('/src/data/users.json')
     if (!res.ok) throw new Error('No se pudo cargar el JSON local')
@@ -120,6 +122,7 @@ const notify = (msg, type = 'flash-success') => {
 }
 
 const handleRemove = (id) => {
+  // Solo ocultamos el usuario en la vista; no se altera el archivo JSON.
   const user = users.value.find(u => u.id === id)
   if (user) hiddenUsers.value = [...hiddenUsers.value.filter(u => u.id !== id), user]
   users.value = users.value.filter(u => u.id !== id)

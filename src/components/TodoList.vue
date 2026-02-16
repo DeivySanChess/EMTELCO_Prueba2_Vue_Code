@@ -127,6 +127,7 @@ watch(
   { immediate: true, deep: true }
 )
 
+// Mensajes breves con autodescarte para feedback del usuario.
 const notify = (msg, type = 'flash-success') => {
   localFlash.value = msg
   localFlashType.value = type
@@ -141,6 +142,7 @@ const usersByRole = (role) => {
 
 const pendingCount = computed(() => props.tasks.filter(t => !t.done).length)
 
+// Orden estable por rol y título para mantener la lista predecible.
 const orderedTasks = computed(() => {
   return [...props.tasks].sort((a, b) => {
     const roleCmp = a.role.localeCompare(b.role)
@@ -150,6 +152,7 @@ const orderedTasks = computed(() => {
 })
 
 const submit = () => {
+  // No permitimos guardar sin título ni rol; limpiamos el formulario tras agregar.
   if (!newTitle.value.trim() || !newRole.value) return
   emit('add', {
     title: newTitle.value,
@@ -158,18 +161,21 @@ const submit = () => {
   })
   notify('Tarea creada.', 'flash-success')
   newTitle.value = ''
+  newRole.value = ''
   newUserId.value = ''
 }
 
 const toggle = (id) => emit('toggle', id)
 
 const saveAssignee = (taskId) => {
+  if (!(taskId in assigneeSelection)) return
   const userId = assigneeSelection[taskId]
   emit('update-assignee', { id: taskId, userId: userId === '' ? null : Number(userId) })
   notify('Asignación actualizada.', 'flash-success')
 }
 
 const remove = (id) => {
+  if (!props.tasks.find(t => t.id === id)) return
   emit('remove', id)
   notify('Tarea eliminada.', 'flash-info')
 }

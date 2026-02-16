@@ -86,6 +86,7 @@ const roles = computed(() => {
   return Array.from(set).sort((a, b) => a.localeCompare(b))
 })
 
+// Filtro combinado por rol y texto, ordenado alfabéticamente.
 const filteredUsers = computed(() => {
   const role = selectedRole.value.trim()
   const q = search.value.trim().toLowerCase()
@@ -103,6 +104,7 @@ const filteredUsers = computed(() => {
   })
 })
 
+// Si la tarea no tiene usuario asignado, la mostramos a quienes comparten el rol.
 const tasksForUser = (user) => props.tasks.filter(t => {
   if (t.assignedUserId) return t.assignedUserId === user.id
   return t.role === user.role
